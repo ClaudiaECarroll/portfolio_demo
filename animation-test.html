@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squirrel Animation Test</title>
+    <link rel="stylesheet" href="css/squirrel-animation.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .test-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px 0;
+            display: block;
+            width: 100%;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-controls">
+        <button onclick="window.squirrelAnimation.trigger()">Trigger Animation</button>
+        <button onclick="window.squirrelAnimation.resetAnimation()">Reset Animation</button>
+    </div>
+
+    <div class="content">
+        <h1>Squirrel Animation Test Page</h1>
+        <p>This is a test page for the squirrel and robot chase animation. The animation should appear at the bottom of the screen with the following sequence:</p>
+        <ol>
+            <li>Left door appears and opens (0-1s)</li>
+            <li>Squirrel runs out to halfway point between doors (1-4s)</li>
+            <li>Squirrel stops and looks back (4-5s)</li>
+            <li>Robot emerges from left door (4.5s)</li>
+            <li>Right door appears and opens (5s)</li>
+            <li>Squirrel continues running to exit door (5.5-8.5s)</li>
+            <li>Robot follows squirrel into exit door</li>
+            <li>Both doors close and disappear (8.5-10s)</li>
+        </ol>
+        <p>The squirrel should stop exactly halfway between the two doors. Use the controls in the top-right to test the animation manually.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+
+    <script src="js/squirrel-animation.js"></script>
+</body>
+</html>

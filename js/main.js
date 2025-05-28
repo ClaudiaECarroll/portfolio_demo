@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initAnimations();
     initAccessibility();
     initSearchFunctionality();
+    initOrganicEffects();
+    initWabiSabiInteractions();
+    initOrganicCursor();
 });
 
 // Scroll effects with organic animations
@@ -89,13 +92,14 @@ function initAnimations() {
             card.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${deltaX * 0.1}deg)`;
         });
     });
-}
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
+    
+    // Add organic button effects
+    const buttonStyle = document.createElement('style');
+    buttonStyle.textContent = `
         .btn {
             position: relative;
             overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
         .btn::before {
@@ -113,7 +117,7 @@ function initAnimations() {
             left: 100%;
         }
     `;
-    document.head.appendChild(style);
+    document.head.appendChild(buttonStyle);
 }
 
 // Accessibility enhancements
@@ -286,3 +290,310 @@ function initLazyLoading() {
 
 // Call lazy loading initialization
 initLazyLoading();
+
+// New organic effects for wabi-sabi aesthetic
+function initOrganicEffects() {
+    // Add subtle texture overlay animation
+    const textureStyle = document.createElement('style');
+    textureStyle.textContent = `
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, transparent 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, rgba(160, 82, 61, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px, 80px 80px;
+            pointer-events: none;
+            z-index: -1;
+            animation: organic-texture 20s linear infinite;
+        }
+        
+        @keyframes organic-texture {
+            0% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(-10px) translateY(-5px); }
+            50% { transform: translateX(-5px) translateY(-10px); }
+            75% { transform: translateX(-15px) translateY(-2px); }
+            100% { transform: translateX(0) translateY(0); }
+        }
+        
+        .staggered-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .staggered-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    `;
+    document.head.appendChild(textureStyle);
+    
+    // Add staggered animations to grid items
+    const gridItems = document.querySelectorAll('.card, .research-item, .course-item, .project-card, .cv-item');
+    gridItems.forEach((item, index) => {
+        item.classList.add('staggered-fade-in');
+        item.style.transitionDelay = `${index * 0.1}s`;
+    });
+    
+    // Trigger staggered animations on scroll
+    const staggerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, 100);
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    gridItems.forEach(item => staggerObserver.observe(item));
+}
+
+// Wabi-sabi specific interactions
+function initWabiSabiInteractions() {
+    // Add organic hover effects to navigation
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            this.style.transform = `translateY(-2px) rotate(${Math.random() * 2 - 1}deg)`;
+            this.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) rotate(0deg)';
+        });
+    });
+    
+    // Add organic loading states for interactive elements
+    const buttons = document.querySelectorAll('.btn, button');
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            if (!this.classList.contains('loading')) {
+                // Create organic ripple effect
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: organic-ripple 0.6s ease-out;
+                    pointer-events: none;
+                `;
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    if (ripple.parentNode) {
+                        ripple.parentNode.removeChild(ripple);
+                    }
+                }, 600);
+            }
+        });
+    });
+    
+    // Add organic ripple animation
+    const rippleStyle = document.createElement('style');
+    rippleStyle.textContent = `
+        @keyframes organic-ripple {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(0.5) rotate(180deg);
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(1) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(rippleStyle);
+    
+    // Add subtle parallax to background elements
+    const parallaxElements = document.querySelectorAll('.hero, .card, .project-card');
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        
+        parallaxElements.forEach((element, index) => {
+            const rate = scrolled * (0.1 + index * 0.02);
+            const rotation = Math.sin(scrolled * 0.001) * 0.5;
+            element.style.transform = `translateY(${rate}px) rotate(${rotation}deg)`;
+        });
+    });
+    
+    // Add organic focus transitions
+    const focusableElements = document.querySelectorAll('a, button, input, textarea, select');
+    focusableElements.forEach(element => {
+        element.addEventListener('focus', function() {
+            this.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            this.style.transform = 'scale(1.02)';
+        });
+        
+        element.addEventListener('blur', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+}
+
+// Add organic cursor effects and final polish
+function initOrganicCursor() {
+    // Create custom cursor elements
+    const cursor = document.createElement('div');
+    const cursorFollower = document.createElement('div');
+    
+    cursor.className = 'organic-cursor';
+    cursorFollower.className = 'organic-cursor-follower';
+    
+    const cursorStyle = document.createElement('style');
+    cursorStyle.textContent = `
+        .organic-cursor {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+        
+        .organic-cursor-follower {
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            border: 1px solid var(--primary-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.3;
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .organic-cursor.hover {
+            transform: scale(1.5);
+            background: var(--accent-color);
+        }
+        
+        .organic-cursor-follower.hover {
+            transform: scale(1.8);
+            border-color: var(--accent-color);
+            opacity: 0.6;
+        }
+        
+        @media (hover: none) and (pointer: coarse) {
+            .organic-cursor,
+            .organic-cursor-follower {
+                display: none;
+            }
+        }
+    `;
+    document.head.appendChild(cursorStyle);
+    
+    document.body.appendChild(cursor);
+    document.body.appendChild(cursorFollower);
+    
+    // Track mouse movement
+    let mouseX = 0, mouseY = 0;
+    let followerX = 0, followerY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
+    });
+    
+    // Smooth follower animation
+    function updateFollower() {
+        followerX += (mouseX - followerX) * 0.1;
+        followerY += (mouseY - followerY) * 0.1;
+        
+        cursorFollower.style.left = followerX - 12 + 'px';
+        cursorFollower.style.top = followerY - 12 + 'px';
+        
+        requestAnimationFrame(updateFollower);
+    }
+    updateFollower();
+    
+    // Add hover effects
+    const hoverElements = document.querySelectorAll('a, button, .btn, .card, .project-card');
+    hoverElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            cursor.classList.add('hover');
+            cursorFollower.classList.add('hover');
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            cursor.classList.remove('hover');
+            cursorFollower.classList.remove('hover');
+        });
+    });
+}
+
+// Enhanced accessibility features
+function enhanceAccessibility() {
+    // Add reduced motion support
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    
+    if (prefersReducedMotion.matches) {
+        const style = document.createElement('style');
+        style.textContent = `
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Add high contrast mode support
+    const highContrast = window.matchMedia('(prefers-contrast: high)');
+    if (highContrast.matches) {
+        document.documentElement.classList.add('high-contrast');
+        const contrastStyle = document.createElement('style');
+        contrastStyle.textContent = `
+            .high-contrast {
+                --primary-color: #000000;
+                --secondary-color: #ffffff;
+                --accent-color: #0066cc;
+                --background: #ffffff;
+                --surface: #f5f5f5;
+                --text-primary: #000000;
+                --text-secondary: #333333;
+                --border: #000000;
+            }
+        `;
+        document.head.appendChild(contrastStyle);
+    }
+}
+
+// Initialize final enhancements
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if user prefers reduced motion before adding cursor effects
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion && window.innerWidth > 768) {
+        initOrganicCursor();
+    }
+    
+    enhanceAccessibility();
+});
