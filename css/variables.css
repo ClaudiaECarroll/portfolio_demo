@@ -1,0 +1,64 @@
+:root {
+    /* Wabi-Sabi Color Palette - Ivory, Rusty Red, Terracotta */
+    --primary-color: #a0523d;        /* Rusty red */
+    --secondary-color: #c67c4e;      /* Warm terracotta */
+    --accent-color: #d4a574;         /* Warm sand */
+    --light-terracotta: #e6c2a6;     /* Light terracotta */
+    --pale-ivory: #f7f3e9;           /* Pale ivory background */
+    
+    /* Natural neutral colors */
+    --text-primary: #3a2f2a;         /* Dark warm brown */
+    --text-secondary: #5d4e47;       /* Medium warm brown */
+    --text-light: #8b7355;           /* Light warm brown */
+    --background: #faf7f0;           /* Warm ivory */
+    --surface: #f4f0e7;              /* Soft ivory surface */
+    --border: #d7c7b7;               /* Warm beige border */
+    
+    /* Typography - More organic, humanistic fonts */
+    --font-primary: 'Crimson Text', 'Crimson Pro', Georgia, serif;
+    --font-secondary: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    /* Spacing - More organic, asymmetrical spacing */
+    --spacing-xs: 0.375rem;
+    --spacing-sm: 0.625rem;
+    --spacing-md: 1.125rem;
+    --spacing-lg: 1.75rem;
+    --spacing-xl: 2.25rem;
+    --spacing-2xl: 3.5rem;
+    --spacing-3xl: 4.5rem;
+    
+    /* Breakpoints */
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    
+    /* Border radius - More organic, slightly irregular */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-organic: 0.5rem 0.75rem 0.5rem 0.625rem;
+    
+    /* Shadows - Softer, more organic shadows */
+    --shadow-sm: 0 2px 4px 0 rgba(160, 82, 61, 0.08);
+    --shadow-md: 0 4px 8px -1px rgba(160, 82, 61, 0.12), 0 2px 4px -1px rgba(160, 82, 61, 0.08);
+    --shadow-lg: 0 8px 16px -3px rgba(160, 82, 61, 0.15), 0 4px 6px -2px rgba(160, 82, 61, 0.1);
+    --shadow-organic: 0 4px 8px -1px rgba(160, 82, 61, 0.1), 0 8px 16px -4px rgba(160, 82, 61, 0.08);
+    
+    /* Transitions - Slower, more natural timing */
+    --transition-fast: 0.2s ease-out;
+    --transition-normal: 0.4s ease-in-out;
+    --transition-slow: 0.6s ease-in-out;
+    
+    /* Texture opacity for organic patterns */
+    --texture-opacity: 0.03;
+    
+    /* Organic animations */
+    --hover-scale: 1.02;
+    --hover-rotate: 0.5deg;
+    
+    /* Texture and imperfection variables */
+    --texture-opacity: 0.02;
+    --border-irregularity: 1px;
+}
+}
