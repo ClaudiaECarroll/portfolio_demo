@@ -1,6 +1,5 @@
-/* Squirrel and Robot Animation Styles */
-
-.squirrel-animation-container {
+/* Door and Chase Animation */
+.door-chase-container {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -11,466 +10,452 @@
     overflow: visible;
 }
 
+/* Door Styles */
 .door {
     position: absolute;
-    bottom: 20px;
-    width: 60px;
-    height: 80px;
-    perspective: 200px;
-}
-
-.door-frame {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #654321 0%, #8B4513 100%);
-    border: 3px solid #4A4A4A;
-    border-radius: 8px 8px 0 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-.door-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%);
-    border-radius: 8px 8px 0 0;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.door-panel {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
-    border: 3px solid #654321;
-    border-radius: 8px 8px 0 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transform-origin: left center;
-    transition: transform 0.8s ease-out;
-}
-
-.door-panel::before {
-    content: '';
-    position: absolute;
-    top: 15px;
-    right: 8px;
-    width: 8px;
-    height: 8px;
-    background: #FFD700;
-    border-radius: 50%;
-    box-shadow: 0 0 4px rgba(255, 215, 0, 0.6);
+    bottom: 0;
+    width: 80px;
+    height: 120px;
+    z-index: 2; /* Above characters initially */
 }
 
 .door-left {
     left: 50px;
 }
 
+.door-right {
+    left: 50%;
+}
+
+.door-frame {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #8B4513;
+    border: 3px solid #654321;
+    border-radius: 8px 8px 0 0;
+}
+
+.door-back {
+    position: absolute;
+    width: calc(100% - 6px);
+    height: calc(100% - 3px);
+    top: 3px;
+    left: 3px;
+    background: #000;
+    border-radius: 5px 5px 0 0;
+}
+
+.door-panel {
+    position: absolute;
+    width: calc(100% - 6px);
+    height: calc(100% - 3px);
+    top: 3px;
+    left: 3px;
+    background: #A0522D;
+    border: 2px solid #8B4513;
+    border-radius: 5px 5px 0 0;
+    transition: transform 0.5s ease;
+    transform-origin: left center;
+}
+
 .door-left .door-panel {
+    transform-origin: left center;
+}
+
+.door-right .door-panel {
     transform-origin: right center;
 }
 
-.door-right {
-    left: 50%;
-    transform: translateX(-50%);
+.door-open .door-left .door-panel {
+    transform: rotateY(-90deg);
 }
 
-.door-opening .door-back {
-    opacity: 1;
+.door-open .door-right .door-panel {
+    transform: rotateY(90deg);
 }
 
-.door-opening .door-panel {
-    transform: perspective(200px) rotateY(90deg);
-}
-
-.door-left.door-opening .door-panel {
-    transform: perspective(200px) rotateY(-90deg);
-}
-
-.door-closing .door-back {
-    opacity: 0;
-}
-
-.door-closing .door-panel {
-    transform: perspective(200px) rotateY(0deg);
-}
-
-.squirrel {
+/* Character Styles */
+.character {
     position: absolute;
-    bottom: 30px;
-    width: 45px;
-    height: 45px;
+    bottom: 20px;
+}
+
+.squirrel-character {
+    width: 50px;
+    height: 50px;
+    left: 70px; /* Position inside the left door */
     opacity: 0;
+    z-index: 1; /* Behind the door initially */
 }
 
 .squirrel-body {
-    position: relative;
-    width: 20px;
-    height: 18px;
-    background: linear-gradient(45deg, #FF8C42 0%, #FFB347 50%, #FFA500 100%);
-    border-radius: 70% 70% 60% 60% / 80% 80% 50% 50%;
-    border: 2px solid #FF6B1A;
-    animation: squirrelBob 0.2s ease-in-out infinite alternate;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    width: 28px;
+    height: 22px;
+    background: #8B7D6B; /* More realistic gray-brown */
+    border: 2px solid #5D5347;
+    border-radius: 60% 60% 70% 70%;
+    bottom: 10px;
+    left: 11px;
+    box-shadow: inset 0 -2px 0 rgba(93, 83, 71, 0.3);
+}
+
+/* Add realistic belly patch */
+.squirrel-belly {
+    position: absolute;
+    width: 16px;
+    height: 14px;
+    background: #D3C7B8; /* Light grayish cream */
+    border: 1px solid #B8AA98;
+    border-radius: 50% 50% 60% 60%;
+    bottom: 12px;
+    left: 17px;
 }
 
 .squirrel-head {
     position: absolute;
-    top: -10px;
-    left: 10px;
-    width: 16px;
-    height: 14px;
-    background: linear-gradient(45deg, #FF8C42 0%, #FFB347 100%);
-    border-radius: 80%;
-    border: 2px solid #FF6B1A;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    width: 22px;
+    height: 18px;
+    background: #8B7D6B;
+    border: 2px solid #5D5347;
+    border-radius: 60% 60% 50% 50%;
+    bottom: 26px;
+    left: 14px;
+    box-shadow: inset 0 -1px 0 rgba(93, 83, 71, 0.3);
 }
 
-.squirrel-head::before {
-    content: '';
+/* Smaller, more realistic snout */
+.squirrel-snout {
     position: absolute;
-    top: 4px;
-    left: 10px;
-    width: 4px;
+    width: 6px;
     height: 4px;
+    background: #D3C7B8;
+    border: 1px solid #B8AA98;
+    border-radius: 50% 50% 60% 60%;
+    bottom: 28px;
+    left: 23px;
+}
+
+/* Small black nose */
+.squirrel-nose {
+    position: absolute;
+    width: 2px;
+    height: 2px;
     background: #000;
     border-radius: 50%;
-    box-shadow: -6px 0 0 #000;
+    bottom: 29px;
+    left: 25px;
 }
 
-.squirrel-head::after {
-    content: '';
+/* Smaller, more subtle eyebrows */
+.squirrel-eyebrow-left {
     position: absolute;
-    top: 8px;
-    left: 6px;
     width: 4px;
-    height: 2px;
-    background: #FF1493;
+    height: 1px;
+    background: #5D5347;
     border-radius: 50%;
+    bottom: 38px;
+    left: 17px;
+    transform: rotate(-10deg);
+}
+
+.squirrel-eyebrow-right {
+    position: absolute;
+    width: 4px;
+    height: 1px;
+    background: #5D5347;
+    border-radius: 50%;
+    bottom: 38px;
+    left: 27px;
+    transform: rotate(10deg);
 }
 
 .squirrel-ears {
     position: absolute;
-    top: -4px;
-    left: 1px;
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-bottom: 6px solid #FF8C42;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+    width: 7px;
+    height: 8px;
+    background: #8B7D6B;
+    border: 2px solid #5D5347;
+    border-radius: 50% 50% 30% 30%; /* More rounded like real squirrel ears */
+    bottom: 40px;
 }
 
-.squirrel-ears::after {
-    content: '';
+.squirrel-ear-left {
+    left: 16px;
+    transform: rotate(-10deg);
+}
+
+.squirrel-ear-right {
+    left: 26px;
+    transform: rotate(10deg);
+}
+
+/* Inner ears - smaller and rounded */
+.squirrel-ear-inner-left {
     position: absolute;
-    top: 0;
-    left: 6px;
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-bottom: 6px solid #FF8C42;
+    width: 3px;
+    height: 4px;
+    background: #D3C7B8;
+    border-radius: 50%;
+    bottom: 42px;
+    left: 18px;
+    transform: rotate(-10deg);
+}
+
+.squirrel-ear-inner-right {
+    position: absolute;
+    width: 3px;
+    height: 4px;
+    background: #D3C7B8;
+    border-radius: 50%;
+    bottom: 42px;
+    left: 28px;
+    transform: rotate(10deg);
+}
+
+.squirrel-eyes {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #FFF;
+    border: 2px solid #000;
+    border-radius: 50%;
+    bottom: 32px;
+}
+
+.squirrel-eye-left {
+    left: 17px;
+}
+
+.squirrel-eye-right {
+    left: 26px;
+}
+
+/* Eye pupils - smaller and more realistic */
+.squirrel-pupil-left {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #000;
+    border-radius: 50%;
+    bottom: 33px;
+    left: 18px;
+}
+
+.squirrel-pupil-right {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #000;
+    border-radius: 50%;
+    bottom: 33px;
+    left: 27px;
 }
 
 .squirrel-tail {
     position: absolute;
-    top: -8px;
-    left: -12px;
-    width: 25px;
-    height: 25px;
-    background: radial-gradient(ellipse at center, #FF8C42 0%, #FFB347 60%, transparent 70%);
-    border-radius: 80%;
-    animation: tailWag 0.3s ease-in-out infinite alternate;
-    border: 2px solid #FF6B1A;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 28px;
+    height: 35px;
+    background: #8B7D6B;
+    border: 2px solid #5D5347;
+    border-radius: 50% 40% 30% 70%; /* Natural bushy tail shape */
+    bottom: 18px;
+    left: -6px;
+    transform: rotate(-20deg);
+    box-shadow: inset 0 -2px 0 rgba(93, 83, 71, 0.3);
+}
+
+/* Tail stripes for natural squirrel markings */
+.squirrel-tail-stripe1 {
+    position: absolute;
+    width: 22px;
+    height: 3px;
+    background: #5D5347;
+    border-radius: 50%;
+    bottom: 25px;
+    left: -3px;
+    transform: rotate(-20deg);
+}
+
+.squirrel-tail-stripe2 {
+    position: absolute;
+    width: 24px;
+    height: 3px;
+    background: #5D5347;
+    border-radius: 50%;
+    bottom: 35px;
+    left: -4px;
+    transform: rotate(-20deg);
 }
 
 .squirrel-legs {
     position: absolute;
-    bottom: -6px;
-    left: 3px;
-    width: 14px;
-    height: 6px;
+    width: 6px;
+    height: 8px;
+    background: #8B7D6B;
+    border: 2px solid #5D5347;
+    border-radius: 40% 40% 50% 50%;
+    bottom: 0px;
 }
 
-.squirrel-legs::before,
-.squirrel-legs::after {
-    content: '';
-    position: absolute;
-    width: 4px;
-    height: 6px;
-    background: #FF6B1A;
-    border-radius: 50% 50% 50% 50% / 20% 20% 80% 80%;
-    border: 1px solid #E55100;
+.squirrel-leg-front {
+    left: 18px;
 }
 
-.squirrel-legs::before {
-    left: 0;
-    animation: legRun1 0.2s ease-in-out infinite alternate;
+.squirrel-leg-back {
+    left: 11px;
 }
 
-.squirrel-legs::after {
-    right: 0;
-    animation: legRun2 0.2s ease-in-out infinite alternate;
-}
-
-@keyframes squirrelBob {
-    0% { transform: translateY(0px) scale(1); }
-    100% { transform: translateY(-3px) scale(1.05); }
-}
-
-@keyframes tailWag {
-    0% { transform: rotate(-15deg) scale(1); }
-    100% { transform: rotate(15deg) scale(1.1); }
-}
-
-@keyframes legRun1 {
-    0% { transform: translateY(0px) rotate(0deg); }
-    100% { transform: translateY(-2px) rotate(-5deg); }
-}
-
-@keyframes legRun2 {
-    0% { transform: translateY(-2px) rotate(5deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
-}
-
-.robot {
-    position: absolute;
-    bottom: 25px;
+.robot-character {
     width: 45px;
     height: 50px;
+    left: 70px; /* Position inside the left door */
     opacity: 0;
+    z-index: 1; /* Behind the door initially */
 }
 
 .robot-body {
-    position: relative;
-    width: 20px;
-    height: 24px;
-    background: linear-gradient(135deg, #00CED1 0%, #20B2AA 50%, #4682B4 100%);
-    border: 2px solid #008B8B;
-    border-radius: 6px;
-    animation: robotWalk 0.25s ease-in-out infinite;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background: #4ECDC4;
+    border: 2px solid #45B7B8;
+    border-radius: 5px;
+    bottom: 5px;
+    left: 10px;
 }
 
 .robot-head {
     position: absolute;
-    top: -14px;
-    left: 1px;
-    width: 18px;
-    height: 14px;
-    background: linear-gradient(135deg, #1E90FF 0%, #4169E1 100%);
-    border: 2px solid #0000CD;
+    width: 20px;
+    height: 18px;
+    background: #4ECDC4;
+    border: 2px solid #45B7B8;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    bottom: 28px;
+    left: 12px;
 }
 
 .robot-eyes {
     position: absolute;
-    top: 4px;
-    left: 2px;
     width: 4px;
     height: 4px;
-    background: #FF1493;
+    background: #FF1744;
     border-radius: 50%;
-    box-shadow: 10px 0 0 #FF1493, 0 0 6px rgba(255, 20, 147, 0.8), 10px 0 6px rgba(255, 20, 147, 0.8);
-    animation: robotEyeGlow 0.8s ease-in-out infinite alternate;
+    bottom: 6px;
+    box-shadow: 0 0 4px #FF1744;
+}
+
+.robot-eye-left {
+    left: 4px;
+}
+
+.robot-eye-right {
+    left: 12px;
 }
 
 .robot-antenna {
     position: absolute;
-    top: -6px;
-    left: 8px;
     width: 2px;
-    height: 6px;
-    background: #008B8B;
-    border-radius: 2px;
+    height: 8px;
+    background: #4ECDC4;
+    bottom: 44px;
+    left: 21px;
 }
 
-.robot-antenna::after {
-    content: '';
+.robot-antenna-tip {
     position: absolute;
-    top: -3px;
-    left: -2px;
-    width: 6px;
-    height: 6px;
-    background: #00FF7F;
+    width: 4px;
+    height: 4px;
+    background: #4CAF50;
     border-radius: 50%;
-    animation: antennaGlow 0.6s ease-in-out infinite alternate;
-    box-shadow: 0 0 8px #00FF7F;
-}
-
-.robot-arms {
-    position: absolute;
-    top: 6px;
-    left: -6px;
-    width: 32px;
-    height: 10px;
-}
-
-.robot-arms::before,
-.robot-arms::after {
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 3px;
-    background: #1E90FF;
-    border: 1px solid #0000CD;
-    border-radius: 4px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-.robot-arms::before {
-    left: 0;
-    animation: armPump1 0.25s ease-in-out infinite alternate;
-}
-
-.robot-arms::after {
-    right: 0;
-    animation: armPump2 0.25s ease-in-out infinite alternate;
+    bottom: 50px;
+    left: 20px;
+    box-shadow: 0 0 4px #4CAF50;
 }
 
 .robot-legs {
     position: absolute;
-    bottom: -8px;
-    left: 4px;
-    width: 12px;
+    width: 6px;
     height: 8px;
-}
-
-.robot-legs::before,
-.robot-legs::after {
-    content: '';
-    position: absolute;
-    width: 4px;
-    height: 8px;
-    background: #20B2AA;
-    border: 1px solid #008B8B;
+    background: #4ECDC4;
+    border: 1px solid #45B7B8;
     border-radius: 3px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    bottom: -3px;
 }
 
-.robot-legs::before {
-    left: 0;
-    animation: robotLeg1 0.25s ease-in-out infinite alternate;
+.robot-leg-left {
+    left: 12px;
 }
 
-.robot-legs::after {
-    right: 0;
-    animation: robotLeg2 0.25s ease-in-out infinite alternate;
+.robot-leg-right {
+    left: 22px;
 }
 
-@keyframes squirrelBob {
-    0% { transform: translateY(0px) scale(1); }
-    100% { transform: translateY(-3px) scale(1.05); }
+/* Animation Classes */
+.squirrelRunFirst {
+    animation: squirrelRunFirst 2s ease-in-out, squirrelLegRun 0.3s infinite;
+    opacity: 1 !important;
+    animation-fill-mode: forwards;
+    z-index: 3 !important; /* Above door when running */
+    transform: translateZ(0); /* Force hardware acceleration */
+    will-change: left, opacity; /* Optimize animation */
 }
 
-@keyframes tailWag {
-    0% { transform: rotate(-15deg) scale(1); }
-    100% { transform: rotate(15deg) scale(1.1); }
+.squirrelLookBack {
+    animation: squirrelLookBack 2s ease-in-out;
+    opacity: 1 !important;
+    left: calc(25% + 25px) !important;
+    z-index: 3 !important;
 }
 
-@keyframes legRun1 {
-    0% { transform: translateY(0px) rotate(0deg); }
-    100% { transform: translateY(-2px) rotate(-5deg); }
+.squirrelRunFinal {
+    animation: squirrelRunFinal 2.5s ease-in-out, squirrelLegRun 0.2s infinite;
+    opacity: 1 !important;
+    animation-fill-mode: forwards;
+    z-index: 3 !important; /* Above door when running */
+    transform: translateZ(0); /* Force hardware acceleration */
+    will-change: left, opacity; /* Optimize animation */
 }
 
-@keyframes legRun2 {
-    0% { transform: translateY(-2px) rotate(5deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
+.robotChase {
+    animation: robotChase 2.5s ease-in-out, robotLegRun 0.3s infinite;
+    opacity: 1 !important;
+    animation-fill-mode: forwards;
+    z-index: 3 !important; /* Above door when running */
+    transform: translateZ(0); /* Force hardware acceleration */
+    will-change: left, opacity; /* Optimize animation */
 }
 
-@keyframes robotWalk {
-    0% { transform: translateY(0px) rotate(-2deg) scale(1); }
-    100% { transform: translateY(-2px) rotate(2deg) scale(1.05); }
-}
-
-@keyframes robotEyeGlow {
-    0% { opacity: 1; }
-    100% { opacity: 0.6; }
-}
-
-@keyframes antennaGlow {
-    0% { opacity: 1; box-shadow: 0 0 6px #00FF00; }
-    100% { opacity: 0.7; box-shadow: 0 0 12px #00FF00; }
-}
-
-@keyframes armPump1 {
-    0% { transform: rotate(-15deg) scale(1); }
-    100% { transform: rotate(15deg) scale(1.1); }
-}
-
-@keyframes armPump2 {
-    0% { transform: rotate(15deg) scale(1.1); }
-    100% { transform: rotate(-15deg) scale(1); }
-}
-
-@keyframes robotLeg1 {
-    0% { transform: translateY(0px) rotate(-8deg); }
-    100% { transform: translateY(-3px) rotate(8deg); }
-}
-
-@keyframes robotLeg2 {
-    0% { transform: translateY(-3px) rotate(8deg); }
-    100% { transform: translateY(0px) rotate(-8deg); }
-}
-
-.squirrel-running-first {
-    animation: squirrelRunFirst 3s linear forwards;
-    left: 110px;
-    opacity: 1;
-}
-
-.squirrel-looking-back {
-    animation: squirrelLookBack 1s ease-in-out forwards;
-    left: calc(25% + 25px);
-    opacity: 1;
-}
-
-.squirrel-running-final {
-    animation: squirrelRunFinal 3s linear forwards;
-    left: calc(25% + 25px);
-    opacity: 1;
-}
-
-.robot-chasing {
-    animation: robotChase 6s linear forwards;
-}
-
+/* Keyframe Animations */
 @keyframes squirrelRunFirst {
     0% {
-        left: 110px;
+        left: 70px;
+        opacity: 0;
+    }
+    5% {
+        left: 70px;
         opacity: 1;
-        transform: scaleX(1);
+    }
+    25% {
+        left: 90px;
+        opacity: 1;
     }
     100% {
         left: calc(25% + 25px);
         opacity: 1;
-        transform: scaleX(1);
     }
 }
 
 @keyframes squirrelLookBack {
     0% {
-        left: calc(25% + 25px);
-        opacity: 1;
         transform: scaleX(1);
     }
-    25% {
-        left: calc(25% + 25px);
-        opacity: 1;
-        transform: scaleX(-1);
-    }
-    75% {
-        left: calc(25% + 25px);
-        opacity: 1;
+    50% {
         transform: scaleX(-1);
     }
     100% {
-        left: calc(25% + 25px);
-        opacity: 1;
         transform: scaleX(1);
     }
 }
@@ -479,100 +464,73 @@
     0% {
         left: calc(25% + 25px);
         opacity: 1;
-        transform: scaleX(1);
-    }
-    75% {
-        left: calc(50% - 15px);
-        opacity: 1;
-        transform: scaleX(1);
     }
     85% {
-        left: calc(50% - 5px);
+        left: calc(50% - 10px);
         opacity: 1;
-        transform: scaleX(1);
-        clip-path: inset(0 0 0 20%);
     }
     95% {
-        left: calc(50% + 5px);
-        opacity: 1;
-        transform: scaleX(1);
-        clip-path: inset(0 0 0 60%);
+        left: calc(50% - 5px);
+        opacity: 0.5;
     }
     100% {
-        left: calc(50% + 15px);
+        left: calc(50%);
         opacity: 0;
-        transform: scaleX(1);
-        clip-path: inset(0 0 0 100%);
     }
 }
 
 @keyframes robotChase {
     0% {
-        left: 110px;
+        left: 70px;
         opacity: 0;
     }
-    8% {
-        left: 110px;
+    5% {
+        left: 70px;
+        opacity: 1;
+    }
+    20% {
+        left: 90px;
         opacity: 1;
     }
     40% {
-        left: calc(25% - 25px);
+        left: calc(25% + 25px);
         opacity: 1;
-        transform: scaleX(1);
     }
     80% {
-        left: calc(50% - 15px);
+        left: calc(50% - 10px);
         opacity: 1;
-        transform: scaleX(1);
     }
     90% {
         left: calc(50% - 5px);
-        opacity: 1;
-        transform: scaleX(1);
-        clip-path: inset(-20px 0 0 15%);
-    }
-    97% {
-        left: calc(50% + 5px);
-        opacity: 1;
-        transform: scaleX(1);
-        clip-path: inset(-20px 0 0 50%);
+        opacity: 0.5;
     }
     100% {
-        left: calc(50% + 15px);
+        left: calc(50%);
         opacity: 0;
-        transform: scaleX(1);
-        clip-path: inset(-20px 0 0 100%);
     }
 }
 
-/* Animation states */
-.animation-hidden {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-
-.animation-visible {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-
-.door {
-    transition: opacity 0.5s ease;
-}
-
-.door.door-closing {
-    animation: doorFadeOut 1.5s ease-out forwards;
-}
-
-@keyframes doorFadeOut {
+/* Running leg animations */
+@keyframes squirrelLegRun {
     0% {
-        opacity: 1;
-        transform: scale(1);
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-2px);
     }
     100% {
-        opacity: 0;
-        transform: scale(0.8);
+        transform: translateY(0px);
+    }
+}
+
+@keyframes robotLegRun {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-1px);
+    }
+    100% {
+        transform: translateY(0px);
     }
 }

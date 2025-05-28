@@ -7,7 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
     initSearchFunctionality();
     initOrganicEffects();
     initWabiSabiInteractions();
-    initOrganicCursor();
+    
+    // Check if user prefers reduced motion before adding cursor effects
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion && window.innerWidth > 768) {
+        initOrganicCursor();
+    }
+    
+    enhanceAccessibility();
 });
 
 // Scroll effects with organic animations
@@ -586,14 +593,3 @@ function enhanceAccessibility() {
         document.head.appendChild(contrastStyle);
     }
 }
-
-// Initialize final enhancements
-document.addEventListener('DOMContentLoaded', function() {
-    // Check if user prefers reduced motion before adding cursor effects
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!prefersReducedMotion && window.innerWidth > 768) {
-        initOrganicCursor();
-    }
-    
-    enhanceAccessibility();
-});

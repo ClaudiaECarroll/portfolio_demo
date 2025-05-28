@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Squirrel Animation Test</title>
+    <title>Door Chase Animation Test</title>
     <link rel="stylesheet" href="css/squirrel-animation.css">
     <style>
         body {
@@ -12,75 +12,164 @@
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            color: white;
         }
+        
         .test-controls {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1001;
+            text-align: center;
+            margin: 50px 0;
         }
+        
         button {
-            background: #007bff;
+            background: #4CAF50;
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 5px;
             cursor: pointer;
-            margin: 5px 0;
-            display: block;
-            width: 100%;
+            margin: 10px;
+            transition: background 0.3s ease;
         }
+        
         button:hover {
-            background: #0056b3;
+            background: #45a049;
         }
-        .content {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
+        
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        
+        .info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
         }
+        
         h1 {
-            color: #333;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
-        p {
-            line-height: 1.6;
-            color: #666;
-            margin-bottom: 15px;
+        
+        .animation-status {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .status-playing {
+            background: rgba(76, 175, 80, 0.3);
+        }
+        
+        .status-stopped {
+            background: rgba(244, 67, 54, 0.3);
         }
     </style>
 </head>
 <body>
-    <div class="test-controls">
-        <button onclick="window.squirrelAnimation.trigger()">Trigger Animation</button>
-        <button onclick="window.squirrelAnimation.resetAnimation()">Reset Animation</button>
-    </div>
-
-    <div class="content">
-        <h1>Squirrel Animation Test Page</h1>
-        <p>This is a test page for the squirrel and robot chase animation. The animation should appear at the bottom of the screen with the following sequence:</p>
+    <h1>🚪 Door Chase Animation Test 🐿️🤖</h1>
+    
+    <div class="info">
+        <h2>Animation Sequence (10 seconds total):</h2>
         <ol>
-            <li>Left door appears and opens (0-1s)</li>
-            <li>Squirrel runs out to halfway point between doors (1-4s)</li>
-            <li>Squirrel stops and looks back (4-5s)</li>
-            <li>Robot emerges from left door (4.5s)</li>
-            <li>Right door appears and opens (5s)</li>
-            <li>Squirrel continues running to exit door (5.5-8.5s)</li>
-            <li>Robot follows squirrel into exit door</li>
-            <li>Both doors close and disappear (8.5-10s)</li>
+            <li><strong>0-0.5s:</strong> Left door opens, revealing dark room</li>
+            <li><strong>0.5-2.5s:</strong> Squirrel runs out and stops halfway between doors</li>
+            <li><strong>2.5-4.5s:</strong> Squirrel looks back (turns around)</li>
+            <li><strong>4.5-7.5s:</strong> Robot emerges, right door opens, both chase to exit</li>
+            <li><strong>7.5-8.5s:</strong> Characters enter right door and disappear</li>
+            <li><strong>8.5-9.5s:</strong> Both doors close</li>
+            <li><strong>9.5-15s:</strong> 5-second pause before next cycle</li>
         </ol>
-        <p>The squirrel should stop exactly halfway between the two doors. Use the controls in the top-right to test the animation manually.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
-
+    
+    <div class="test-controls">
+        <div class="animation-status status-playing" id="status">
+            Animation Status: Playing (auto-repeating every 15 seconds)
+        </div>
+        
+        <button onclick="startAnimation()" id="startBtn">Start Animation</button>
+        <button onclick="stopAnimation()" id="stopBtn">Stop Animation</button>
+        <button onclick="resetAnimation()" id="resetBtn">Reset Animation</button>
+    </div>
+    
+    <div class="info">
+        <h3>Character Details:</h3>
+        <ul>
+            <li><strong>Squirrel:</strong> Cartoony orange design with fluffy tail and big eyes</li>
+            <li><strong>Robot:</strong> Cyan/blue cyborg with glowing red eyes and green antenna</li>
+            <li><strong>Doors:</strong> Brown wooden doors that open inward to reveal dark rooms</li>
+            <li><strong>Positioning:</strong> Left door at 50px, right door at center (50%), squirrel stops at 25% + 25px</li>
+        </ul>
+    </div>
+    
+    <div class="info">
+        <p><strong>Navigation:</strong></p>
+        <a href="index.html" style="color: #4CAF50; text-decoration: none;">← Back to Portfolio</a> |
+        <a href="about.html" style="color: #4CAF50; text-decoration: none;">About</a> |
+        <a href="research.html" style="color: #4CAF50; text-decoration: none;">Research</a>
+    </div>
+    
     <script src="js/squirrel-animation.js"></script>
+    <script>
+        let animation = null;
+        
+        function updateStatus(isPlaying) {
+            const status = document.getElementById('status');
+            const startBtn = document.getElementById('startBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            
+            if (isPlaying) {
+                status.textContent = 'Animation Status: Playing (auto-repeating every 15 seconds)';
+                status.className = 'animation-status status-playing';
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+            } else {
+                status.textContent = 'Animation Status: Stopped';
+                status.className = 'animation-status status-stopped';
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+            }
+        }
+        
+        function startAnimation() {
+            if (animation) {
+                animation.destroy();
+            }
+            animation = new DoorChaseAnimation();
+            updateStatus(true);
+        }
+        
+        function stopAnimation() {
+            if (animation) {
+                animation.destroy();
+                animation = null;
+            }
+            updateStatus(false);
+        }
+        
+        function resetAnimation() {
+            stopAnimation();
+            setTimeout(() => {
+                startAnimation();
+            }, 100);
+        }
+        
+        // Auto-start animation when page loads
+        window.addEventListener('load', () => {
+            updateStatus(true);
+        });
+        
+        // Update button states when animation starts/stops
+        setInterval(() => {
+            if (window.doorChaseAnimation) {
+                updateStatus(window.doorChaseAnimation.isPlaying || false);
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
