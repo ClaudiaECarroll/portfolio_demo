@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Door Animation Test</title>
+    <link rel="stylesheet" href="css/squirrel-animation.css">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .test-controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 9999;
+        }
+        
+        button {
+            margin: 5px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            background: #007acc;
+            color: white;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #005a99;
+        }
+        
+        .status {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-controls">
+        <h3>Door Animation Test</h3>
+        <button onclick="showDoors()">Show Doors</button>
+        <button onclick="openLeftDoor()">Open Left Door</button>
+        <button onclick="openRightDoor()">Open Right Door</button>
+        <button onclick="closeAllDoors()">Close All Doors</button>
+        <button onclick="hideDoors()">Hide Doors</button>
+        <button onclick="testFullSequence()">Test Full Sequence</button>
+        <div class="status" id="status">Ready</div>
+    </div>
+
+    <!-- Test container -->
+    <div class="door-chase-container" id="testContainer">
+        <!-- Left Door -->
+        <div class="door door-left" id="leftDoor">
+            <div class="door-frame"></div>
+            <div class="door-back"></div>
+            <div class="door-panel"></div>
+        </div>
+
+        <!-- Right Door -->
+        <div class="door door-right" id="rightDoor">
+            <div class="door-frame"></div>
+            <div class="door-back"></div>
+            <div class="door-panel"></div>
+        </div>
+
+        <!-- Squirrel Character -->
+        <div class="squirrel-character character" id="squirrel">
+            <div class="squirrel-body"></div>
+            <div class="squirrel-belly"></div>
+            <div class="squirrel-head"></div>
+            <div class="squirrel-snout"></div>
+            <div class="squirrel-nose"></div>
+            <div class="squirrel-ears squirrel-ear-left"></div>
+            <div class="squirrel-ears squirrel-ear-right"></div>
+            <div class="squirrel-ear-inner-left"></div>
+            <div class="squirrel-ear-inner-right"></div>
+            <div class="squirrel-eyebrow-left"></div>
+            <div class="squirrel-eyebrow-right"></div>
+            <div class="squirrel-eyes squirrel-eye-left"></div>
+            <div class="squirrel-eyes squirrel-eye-right"></div>
+            <div class="squirrel-pupil-left"></div>
+            <div class="squirrel-pupil-right"></div>
+            <div class="squirrel-tail"></div>
+            <div class="squirrel-tail-stripe1"></div>
+            <div class="squirrel-tail-stripe2"></div>
+            <div class="squirrel-legs squirrel-leg-front"></div>
+            <div class="squirrel-legs squirrel-leg-back"></div>
+        </div>
+
+        <!-- Robot Character -->
+        <div class="robot-character character" id="robot">
+            <div class="robot-body"></div>
+            <div class="robot-head">
+                <div class="robot-eyes robot-eye-left"></div>
+                <div class="robot-eyes robot-eye-right"></div>
+            </div>
+            <div class="robot-antenna"></div>
+            <div class="robot-antenna-tip"></div>
+            <div class="robot-legs robot-leg-left"></div>
+            <div class="robot-legs robot-leg-right"></div>
+        </div>
+
+        <!-- Monk Character -->
+        <div class="monk-character character" id="monk">
+            <div class="monk-body"></div>
+            <div class="monk-robe"></div>
+            <div class="monk-head"></div>
+            <div class="monk-eyes monk-eye-left"></div>
+            <div class="monk-eyes monk-eye-right"></div>
+            <div class="monk-mouth"></div>
+            <div class="monk-hands monk-hand-left"></div>
+            <div class="monk-hands monk-hand-right"></div>
+            <div class="monk-feet monk-foot-left"></div>
+            <div class="monk-feet monk-foot-right"></div>
+        </div>
+    </div>
+
+    <!-- Medieval Monk Character -->
+    <div class="monk-container">
+        <div class="monk-character">
+            <div class="monk-robe"></div>
+            <div class="monk-belt"></div>
+            <div class="monk-belt-knot"></div>
+            <div class="monk-head"></div>
+            <div class="monk-tonsure"></div>
+            <div class="monk-hair"></div>
+            <div class="monk-eyes monk-eye-left"></div>
+            <div class="monk-eyes monk-eye-right"></div>
+            <div class="monk-pupil-left"></div>
+            <div class="monk-pupil-right"></div>
+            <div class="monk-nose"></div>
+            <div class="monk-mouth"></div>
+            <div class="monk-hands"></div>
+            <div class="monk-sleeve-left"></div>
+            <div class="monk-sleeve-right"></div>
+            <div class="monk-cross"></div>
+        </div>
+    </div>
+
+    <script>
+        const leftDoor = document.getElementById('leftDoor');
+        const rightDoor = document.getElementById('rightDoor');
+        const squirrel = document.getElementById('squirrel');
+        const robot = document.getElementById('robot');
+        const monk = document.getElementById('monk');
+        const status = document.getElementById('status');
+
+        function updateStatus(msg) {
+            status.textContent = msg;
+            console.log('🔧 ' + msg);
+        }
+
+        function showDoors() {
+            leftDoor.classList.add('show');
+            rightDoor.classList.add('show');
+            updateStatus('Doors shown. Left classes: ' + leftDoor.className + ' | Right classes: ' + rightDoor.className);
+        }
+
+        function openLeftDoor() {
+            leftDoor.classList.add('door-open');
+            updateStatus('Left door opened. Classes: ' + leftDoor.className);
+        }
+
+        function openRightDoor() {
+            rightDoor.classList.add('door-open');
+            updateStatus('Right door opened. Classes: ' + rightDoor.className);
+        }
+
+        function closeAllDoors() {
+            leftDoor.classList.remove('door-open');
+            rightDoor.classList.remove('door-open');
+            updateStatus('All doors closed');
+        }
+
+        function hideDoors() {
+            leftDoor.classList.remove('show', 'door-open');
+            rightDoor.classList.remove('show', 'door-open');
+            updateStatus('Doors hidden');
+        }
+
+        async function testFullSequence() {
+            updateStatus('Starting full sequence test...');
+            
+            // Reset everything
+            hideDoors();
+            squirrel.style.opacity = '0';
+            robot.style.opacity = '0';
+            monk.style.opacity = '0';
+            squirrel.classList.remove('squirrelRunFirst', 'squirrelLookBack', 'squirrelRunFinal');
+            robot.classList.remove('robotChase');
+            monk.classList.remove('monkAppear', 'monkBow', 'monkWave');
+            
+            await delay(500);
+            
+            // Step 1: Show doors
+            updateStatus('Step 1: Showing doors');
+            showDoors();
+            await delay(300);
+            
+            // Step 2: Open left door
+            updateStatus('Step 2: Opening left door');
+            openLeftDoor();
+            await delay(300);
+            
+            // Step 3: Squirrel jumps
+            updateStatus('Step 3: Squirrel jumps');
+            squirrel.style.opacity = '1';
+            squirrel.classList.add('squirrelRunFirst');
+            await delay(2000);
+            
+            // Step 4: Squirrel looks back
+            updateStatus('Step 4: Squirrel looks back');
+            squirrel.classList.add('squirrelLookBack');
+            await delay(1500);
+            
+            // Step 5: Squirrel final run
+            updateStatus('Step 5: Squirrel final run');
+            squirrel.classList.remove('squirrelLookBack');
+            squirrel.classList.add('squirrelRunFinal');
+            await delay(600);
+            
+            // Step 6: Open right door
+            updateStatus('Step 6: Opening right door');
+            openRightDoor();
+            await delay(1000);
+            
+            // Step 7: Squirrel disappears
+            updateStatus('Step 7: Squirrel disappears');
+            squirrel.style.transition = 'opacity 0.3s ease-out';
+            squirrel.style.opacity = '0';
+            await delay(400);
+            
+            // Step 8: Robot appears
+            updateStatus('Step 8: Robot appears');
+            robot.style.opacity = '1';
+            robot.classList.add('robotChase');
+            await delay(300);
+            
+            // Step 9: Close left door
+            updateStatus('Step 9: Closing left door');
+            leftDoor.classList.remove('door-open');
+            await delay(3000);
+            
+            // Step 10: Robot disappears
+            updateStatus('Step 10: Robot disappears');
+            robot.style.transition = 'opacity 0.3s ease-out';
+            robot.style.opacity = '0';
+            await delay(400);
+            
+            // Step 11: Open left door again
+            updateStatus('Step 11: Opening left door');
+            leftDoor.classList.add('door-open');
+            await delay(500);
+            
+            // Step 12: Monk appears
+            updateStatus('Step 12: Monk appears');
+            monk.style.opacity = '1';
+            monk.classList.add('monkAppear');
+            await delay(1000);
+            
+            // Step 13: Monk bows
+            updateStatus('Step 13: Monk bows');
+            monk.classList.add('monkBow');
+            await delay(800);
+            
+            // Step 14: Monk waves and disappears
+            updateStatus('Step 14: Monk waves and disappears');
+            monk.classList.remove('monkBow');
+            monk.classList.add('monkWave');
+            await delay(800);
+            monk.style.opacity = '0';
+            
+            // Step 15: Close right door
+            updateStatus('Step 15: Closing right door');
+            rightDoor.classList.remove('door-open');
+            await delay(500);
+            
+            // Step 16: Hide doors
+            updateStatus('Step 16: Hiding doors');
+            hideDoors();
+            
+            updateStatus('Full sequence test complete!');
+        }
+
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Initialize
+        updateStatus('Door animation test ready');
+    </script>
+</body>
+</html>

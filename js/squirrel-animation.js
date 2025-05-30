@@ -96,57 +96,85 @@ class DoorChaseAnimation {
         const squirrel = this.container.querySelector('.squirrel-character');
         const robot = this.container.querySelector('.robot-character');
 
+        const startTime = Date.now();
+        const logTime = (msg) => console.log(`[${Date.now() - startTime}ms] ${msg}`);
+
         try {
             // Reset all elements
             this.resetAnimation();
+            logTime('🔄 Animation reset complete');
 
             // Step 1: Show doors and open left door for characters to emerge
-            console.log('🚪 Showing doors and opening left door');
+            logTime('🚪 Showing doors and opening left door');
             leftDoor.classList.add('show');
             rightDoor.classList.add('show');
+            logTime('Left door show classes: ' + leftDoor.className);
+            logTime('Right door show classes: ' + rightDoor.className);
+            
+            await this.delay(200); // Small delay to let doors appear
             leftDoor.classList.add('door-open');
-            console.log('Left door classes:', leftDoor.className);
+            logTime('Left door open classes: ' + leftDoor.className);
 
             // Step 2: Squirrel emerges and runs to halfway point (2s)
             await this.delay(300); // Let door fully open first
+            logTime('🐿️ Squirrel emerges and starts first run');
             squirrel.style.opacity = '1'; // Make squirrel visible
             squirrel.classList.add('squirrelRunFirst');
 
             // Step 3: Squirrel jumps and looks back (2s)
             await this.delay(2000);
+            logTime('🐿️ Squirrel jumping and looking back');
             squirrel.classList.add('squirrelLookBack');
 
-            // Step 4: Robot emerges from left door and both start running toward right door
+            // Step 4: Squirrel starts running toward right door first
             await this.delay(1500); // Robot appears while squirrel is jumping
+            logTime('🐿️ Squirrel starts final run to door');
             squirrel.classList.remove('squirrelLookBack');
             squirrel.classList.add('squirrelRunFinal');
-            await this.delay(200); // Small delay for robot to emerge
+            
+            // Step 5: Open right door early for squirrel to escape through
+            await this.delay(600); // Open right door earlier for squirrel (at 1.2s of 1.8s animation)
+            logTime('🚪 Opening right door for squirrel escape');
+            rightDoor.classList.add('door-open');
+            logTime('Right door classes: ' + rightDoor.className);
+            
+            // Step 6: Squirrel reaches door and disappears (fade out manually)
+            await this.delay(1000); // Wait for squirrel to reach door (1.8s total - 600ms = 1200ms remaining, so wait 1000ms)
+            logTime('🐿️ Squirrel disappearing through door');
+            squirrel.style.transition = 'opacity 0.3s ease-out';
+            squirrel.style.opacity = '0';
+            
+            // Step 7: Robot emerges and starts chasing after squirrel has already escaped
+            await this.delay(400); // Delay after squirrel disappears
+            logTime('🤖 Robot emerges and starts chasing');
             robot.style.opacity = '1'; // Make robot visible
             robot.classList.add('robotChase');
-            
-            // Step 5: Open right door as they approach it (timing to open before they reach it)
-            await this.delay(1200); // Open right door as they're running toward it
-            console.log('🚪 Opening right door');
-            rightDoor.classList.add('door-open');
-            console.log('Right door classes:', rightDoor.className);
 
-            // Step 6: Close left door since characters have emerged
-            await this.delay(300);
-            console.log('🚪 Closing left door');
+            // Step 8: Close left door since characters have emerged (keep it open longer)
+            await this.delay(2300); // Extended from 300ms to 2300ms (2 seconds longer)
+            logTime('🚪 Closing left door');
             leftDoor.classList.remove('door-open');
 
-            // Step 7: Close right door after characters pass through (wait for them to disappear)
-            await this.delay(1300); // Wait for characters to go through right door
-            console.log('🚪 Closing right door');
+            // Step 9: Robot reaches door and disappears (fade out manually)
+            await this.delay(3000); // Wait for robot to reach door (3.5s total - 500ms delays = 3000ms)
+            logTime('🤖 Robot disappearing through door');
+            robot.style.transition = 'opacity 0.3s ease-out';
+            robot.style.opacity = '0';
+
+            // Step 10: Close right door after robot passes through
+            await this.delay(400); // Wait for robot to fully disappear
+            logTime('🚪 Closing right door after robot passes through');
             rightDoor.classList.remove('door-open');
 
             // Step 8: Hide doors and clean up and prepare for next cycle
             await this.delay(500); // Wait for doors to close
+            logTime('🚪 Hiding doors and cleaning up');
             leftDoor.classList.remove('show');
             rightDoor.classList.remove('show');
             await this.delay(500);
             this.resetAnimation();
             this.isPlaying = false;
+            logTime('🔄 Animation cycle complete, starting next in 5s');
 
             // Start next cycle after delay
             this.animationTimeout = setTimeout(() => {
@@ -169,6 +197,7 @@ class DoorChaseAnimation {
             squirrel.classList.remove('squirrelRunFirst', 'squirrelLookBack', 'squirrelRunFinal');
             squirrel.style.opacity = '0';
             squirrel.style.left = '70px';
+            squirrel.style.transition = ''; // Clear any manual transitions
             // Remove clip-path completely
             squirrel.style.clipPath = '';
             squirrel.style.zIndex = '1';
@@ -177,6 +206,7 @@ class DoorChaseAnimation {
             robot.classList.remove('robotChase');
             robot.style.opacity = '0';
             robot.style.left = '70px';
+            robot.style.transition = ''; // Clear any manual transitions
             // Remove clip-path completely
             robot.style.clipPath = '';
             robot.style.zIndex = '1';
