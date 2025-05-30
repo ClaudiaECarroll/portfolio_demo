@@ -100,38 +100,47 @@ class DoorChaseAnimation {
             // Reset all elements
             this.resetAnimation();
 
-            // Step 1: Show doors and open left door (0.5s)
+            // Step 1: Show doors and open left door for characters to emerge
+            console.log('🚪 Showing doors and opening left door');
             leftDoor.classList.add('show');
             rightDoor.classList.add('show');
             leftDoor.classList.add('door-open');
+            console.log('Left door classes:', leftDoor.className);
 
-            // Step 2: Squirrel runs to halfway point (2s)
-            await this.delay(200); // Short delay to let door start opening
+            // Step 2: Squirrel emerges and runs to halfway point (2s)
+            await this.delay(300); // Let door fully open first
             squirrel.style.opacity = '1'; // Make squirrel visible
-            // Remove manual clip-path - let CSS animation handle it
-            await this.delay(300);
             squirrel.classList.add('squirrelRunFirst');
 
-            // Step 3: Squirrel looks back (2s)
+            // Step 3: Squirrel jumps and looks back (2s)
             await this.delay(2000);
             squirrel.classList.add('squirrelLookBack');
 
-            // Step 4: Robot emerges and both run to exit (3s)
-            await this.delay(1500); // Shorter delay so robot appears while squirrel is still looking back
+            // Step 4: Robot emerges from left door and both start running toward right door
+            await this.delay(1500); // Robot appears while squirrel is jumping
             squirrel.classList.remove('squirrelLookBack');
             squirrel.classList.add('squirrelRunFinal');
-            await this.delay(300); // Small delay so robot appears slightly after squirrel starts running
+            await this.delay(200); // Small delay for robot to emerge
             robot.style.opacity = '1'; // Make robot visible
-            // Remove manual clip-path - let CSS animation handle it
             robot.classList.add('robotChase');
+            
+            // Step 5: Open right door as they approach it (timing to open before they reach it)
+            await this.delay(1200); // Open right door as they're running toward it
+            console.log('🚪 Opening right door');
             rightDoor.classList.add('door-open');
+            console.log('Right door classes:', rightDoor.className);
 
-            // Step 5: Close doors, hide them, and reset (after 2.8s to account for faster robot)
-            await this.delay(2800);
+            // Step 6: Close left door since characters have emerged
+            await this.delay(300);
+            console.log('🚪 Closing left door');
             leftDoor.classList.remove('door-open');
+
+            // Step 7: Close right door after characters pass through (wait for them to disappear)
+            await this.delay(1300); // Wait for characters to go through right door
+            console.log('🚪 Closing right door');
             rightDoor.classList.remove('door-open');
 
-            // Step 6: Hide doors and clean up and prepare for next cycle
+            // Step 8: Hide doors and clean up and prepare for next cycle
             await this.delay(500); // Wait for doors to close
             leftDoor.classList.remove('show');
             rightDoor.classList.remove('show');

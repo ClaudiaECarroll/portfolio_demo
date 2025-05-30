@@ -752,3 +752,193 @@ body {
 .cards-grid .card:nth-child(3n+3) {
     margin-top: var(--spacing-xs);
 }
+
+/* Medieval Monk Character */
+.monk-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 80px;
+    height: 100px;
+    pointer-events: none;
+    z-index: 500;
+}
+
+.monk-character {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Monk's robe */
+.monk-robe {
+    position: absolute;
+    width: 60px;
+    height: 70px;
+    background: #4A3D2A; /* Brown monk's habit */
+    border: 2px solid #3A2F1E;
+    border-radius: 30px 30px 5px 5px;
+    bottom: 0;
+    left: 10px;
+    box-shadow: inset 0 -5px 0 rgba(58, 47, 30, 0.4);
+}
+
+/* Rope belt */
+.monk-belt {
+    position: absolute;
+    width: 50px;
+    height: 4px;
+    background: #8B7355;
+    border: 1px solid #6B5940;
+    bottom: 25px;
+    left: 15px;
+    border-radius: 2px;
+}
+
+.monk-belt-knot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #8B7355;
+    border: 1px solid #6B5940;
+    border-radius: 50%;
+    bottom: 23px;
+    left: 20px;
+}
+
+/* Monk's head */
+.monk-head {
+    position: absolute;
+    width: 30px;
+    height: 25px;
+    background: #FDBCB4; /* Skin tone */
+    border: 2px solid #E4A88A;
+    border-radius: 50% 50% 40% 40%;
+    bottom: 65px;
+    left: 25px;
+}
+
+/* Tonsure (bald spot) */
+.monk-tonsure {
+    position: absolute;
+    width: 18px;
+    height: 15px;
+    background: #FDBCB4;
+    border-radius: 50%;
+    bottom: 70px;
+    left: 31px;
+}
+
+/* Hair ring around tonsure */
+.monk-hair {
+    position: absolute;
+    width: 26px;
+    height: 20px;
+    background: #8B4513;
+    border-radius: 50% 50% 30% 30%;
+    bottom: 67px;
+    left: 27px;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 60%, 85% 80%, 15% 80%, 0% 60%);
+}
+
+/* Monk's face */
+.monk-eyes {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #2C1810;
+    border-radius: 50%;
+    bottom: 72px;
+}
+
+.monk-eye-left {
+    left: 29px;
+}
+
+.monk-eye-right {
+    left: 37px;
+}
+
+.monk-nose {
+    position: absolute;
+    width: 2px;
+    height: 3px;
+    background: #E4A88A;
+    border-radius: 50%;
+    bottom: 70px;
+    left: 33px;
+}
+
+.monk-mouth {
+    position: absolute;
+    width: 4px;
+    height: 1px;
+    background: #8B4513;
+    border-radius: 50%;
+    bottom: 68px;
+    left: 32px;
+}
+
+/* Monk's hands in prayer */
+.monk-hands {
+    position: absolute;
+    width: 12px;
+    height: 8px;
+    background: #FDBCB4;
+    border: 1px solid #E4A88A;
+    border-radius: 50% 50% 30% 30%;
+    bottom: 35px;
+    left: 34px;
+    transform: rotate(-10deg);
+}
+
+/* Sleeves */
+.monk-sleeve-left {
+    position: absolute;
+    width: 18px;
+    height: 25px;
+    background: #4A3D2A;
+    border: 2px solid #3A2F1E;
+    border-radius: 15px 5px 5px 15px;
+    bottom: 30px;
+    left: 15px;
+    transform: rotate(15deg);
+}
+
+.monk-sleeve-right {
+    position: absolute;
+    width: 18px;
+    height: 25px;
+    background: #4A3D2A;
+    border: 2px solid #3A2F1E;
+    border-radius: 5px 15px 15px 5px;
+    bottom: 30px;
+    left: 47px;
+    transform: rotate(-15deg);
+}
+
+/* Cross pendant */
+.monk-cross {
+    position: absolute;
+    width: 6px;
+    height: 8px;
+    background: #DAA520; /* Gold */
+    bottom: 45px;
+    left: 37px;
+    clip-path: polygon(40% 0%, 60% 0%, 60% 35%, 100% 35%, 100% 55%, 60% 55%, 60% 100%, 40% 100%, 40% 55%, 0% 55%, 0% 35%, 40% 35%);
+    box-shadow: 0 0 3px rgba(218, 165, 32, 0.5);
+}
+
+/* Subtle animation - gentle swaying */
+.monk-character {
+    animation: monkSway 4s ease-in-out infinite;
+}
+
+@keyframes monkSway {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(1deg);
+    }
+}

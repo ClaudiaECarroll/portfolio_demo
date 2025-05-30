@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Door Animation Test</title>
+    <link rel="stylesheet" href="css/squirrel-animation.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-container {
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Door Animation Test</h1>
+    
+    <div class="test-container">
+        <button onclick="showDoors()">Show Doors</button>
+        <button onclick="openLeftDoor()">Open Left Door</button>
+        <button onclick="openRightDoor()">Open Right Door</button>
+        <button onclick="closeAllDoors()">Close All Doors</button>
+        <button onclick="hideAllDoors()">Hide All Doors</button>
+    </div>
+
+    <div class="door-chase-container">
+        <!-- Left Door -->
+        <div class="door door-left">
+            <div class="door-frame"></div>
+            <div class="door-back"></div>
+            <div class="door-panel"></div>
+        </div>
+
+        <!-- Right Door -->
+        <div class="door door-right">
+            <div class="door-frame"></div>
+            <div class="door-back"></div>
+            <div class="door-panel"></div>
+        </div>
+    </div>
+
+    <script>
+        function showDoors() {
+            document.querySelector('.door-left').classList.add('show');
+            document.querySelector('.door-right').classList.add('show');
+            console.log('Doors shown');
+        }
+
+        function openLeftDoor() {
+            document.querySelector('.door-left').classList.add('door-open');
+            console.log('Left door opened, classes:', document.querySelector('.door-left').className);
+        }
+
+        function openRightDoor() {
+            document.querySelector('.door-right').classList.add('door-open');
+            console.log('Right door opened, classes:', document.querySelector('.door-right').className);
+        }
+
+        function closeAllDoors() {
+            document.querySelector('.door-left').classList.remove('door-open');
+            document.querySelector('.door-right').classList.remove('door-open');
+            console.log('All doors closed');
+        }
+
+        function hideAllDoors() {
+            document.querySelector('.door-left').classList.remove('show', 'door-open');
+            document.querySelector('.door-right').classList.remove('show', 'door-open');
+            console.log('All doors hidden');
+        }
+    </script>
+</body>
+</html>
