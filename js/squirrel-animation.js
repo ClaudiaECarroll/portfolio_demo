@@ -100,7 +100,9 @@ class DoorChaseAnimation {
             // Reset all elements
             this.resetAnimation();
 
-            // Step 1: Open left door (0.5s)
+            // Step 1: Show doors and open left door (0.5s)
+            leftDoor.classList.add('show');
+            rightDoor.classList.add('show');
             leftDoor.classList.add('door-open');
 
             // Step 2: Squirrel runs to halfway point (2s)
@@ -124,13 +126,16 @@ class DoorChaseAnimation {
             robot.classList.add('robotChase');
             rightDoor.classList.add('door-open');
 
-            // Step 5: Close doors and reset (after 2.8s to account for faster robot)
+            // Step 5: Close doors, hide them, and reset (after 2.8s to account for faster robot)
             await this.delay(2800);
             leftDoor.classList.remove('door-open');
             rightDoor.classList.remove('door-open');
 
-            // Step 6: Clean up and prepare for next cycle
-            await this.delay(1000);
+            // Step 6: Hide doors and clean up and prepare for next cycle
+            await this.delay(500); // Wait for doors to close
+            leftDoor.classList.remove('show');
+            rightDoor.classList.remove('show');
+            await this.delay(500);
             this.resetAnimation();
             this.isPlaying = false;
 
@@ -168,10 +173,10 @@ class DoorChaseAnimation {
             robot.style.zIndex = '1';
         }
         if (leftDoor) {
-            leftDoor.classList.remove('door-open');
+            leftDoor.classList.remove('door-open', 'show');
         }
         if (rightDoor) {
-            rightDoor.classList.remove('door-open');
+            rightDoor.classList.remove('door-open', 'show');
         }
     }
 

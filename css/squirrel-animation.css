@@ -17,6 +17,12 @@
     width: 80px;
     height: 120px;
     z-index: 2; /* Above characters initially */
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+.door.show {
+    opacity: 1;
 }
 
 .door-left {
@@ -404,7 +410,7 @@
 }
 
 .squirrelLookBack {
-    animation: squirrelLookBack 2s ease-in-out;
+    animation: squirrelJump 2s ease-in-out;
     opacity: 1 !important;
     left: calc(25% + 25px) !important;
     z-index: 3 !important;
@@ -445,18 +451,6 @@
     100% {
         left: calc(25% + 25px);
         opacity: 1;
-    }
-}
-
-@keyframes squirrelLookBack {
-    0% {
-        transform: scaleX(1);
-    }
-    50% {
-        transform: scaleX(-1);
-    }
-    100% {
-        transform: scaleX(1);
     }
 }
 
@@ -507,6 +501,24 @@
     100% {
         left: calc(50%);
         opacity: 0;
+    }
+}
+
+@keyframes squirrelJump {
+    0% {
+        transform: scaleX(1) translateY(0px);
+    }
+    25% {
+        transform: scaleX(1) translateY(-15px);
+    }
+    50% {
+        transform: scaleX(-1) translateY(-20px);
+    }
+    75% {
+        transform: scaleX(-1) translateY(-15px);
+    }
+    100% {
+        transform: scaleX(1) translateY(0px);
     }
 }
 
